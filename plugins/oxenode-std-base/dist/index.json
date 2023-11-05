@@ -9,6 +9,7 @@
         "if",
         "get",
         "eval",
+        "delay",
         "Print",
         "Begin"
     ],
