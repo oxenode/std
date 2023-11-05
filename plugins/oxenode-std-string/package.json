@@ -9,7 +9,6 @@
   "dependencies": {
     "@oxenode/core": "file:../../../oxenode/frontend/modules/core",
     "@oxenode/ui": "file:../../../oxenode/frontend/modules/ui",
-    "handlebars": "^4.7.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

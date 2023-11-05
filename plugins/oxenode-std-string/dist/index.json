@@ -5,8 +5,7 @@
     "blueprints": [
         "toString",
         "string",
-        "compare",
-        "Template"
+        "compare"
     ],
     "icon": "FiType"
 }
