@@ -1,0 +1,28 @@
+{
+    "name": "oxenode-std-math",
+    "version": "0.0.1",
+    "date": "2023-11-05",
+    "blueprints": [
+        "toNumber",
+        "tan",
+        "sub",
+        "sqrt",
+        "sin",
+        "round",
+        "random",
+        "pow",
+        "number",
+        "mult",
+        "less",
+        "increment",
+        "greater",
+        "floor",
+        "equals",
+        "div",
+        "decrement",
+        "cos",
+        "add",
+        "abs"
+    ],
+    "icon": "FiPercent"
+}

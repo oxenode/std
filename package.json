@@ -1,0 +1,11 @@
+{
+  "name": "@oxenode/std",
+  "version": "0.0.1",
+  "description": "This is a static node plugin for oxenode",
+  "main": "index.js",
+  "scripts": {
+    "build": "node mono.js build"
+  },
+  "author": "Matias Vazquez-Levi",
+  "license": "ISC"
+}
