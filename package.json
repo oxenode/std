@@ -4,7 +4,7 @@
   "description": "This is a static node plugin for oxenode",
   "main": "index.js",
   "scripts": {
-    "build": "node mono.js build"
+    "mono": "node mono.js"
   },
   "author": "Matias Vazquez-Levi",
   "license": "ISC"

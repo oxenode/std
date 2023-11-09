@@ -8,6 +8,11 @@ const pluginConfig = JSON.parse(fs.readFileSync('./.oxerc', 'utf-8'));
 // Find all the source files
 const files = glob.sync('./src/**/*.{ts,tsx}');
 
+const {
+  CheckExportWebpackPlugin,
+  CheckDefaultExportWebpackPlugin
+} = require('@oxenode/cli/lib/plugins/checkExports');
+
 // Generate an entries object
 const entries = files.reduce((entries, entry) => {
   const singleEntry = path.parse(entry);
@@ -41,6 +46,15 @@ pluginMeta(files);
 
 module.exports = {
   mode: 'production',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    liveReload: false,
+    hot: false,
+    compress: true,
+    port: 5500,
+  },
   entry: entries,
   experiments: {
     outputModule: true
@@ -67,17 +81,23 @@ module.exports = {
             }
         })
     ]
-},
+  },
   externals: {
-  '@uiw/react-textarea-code-editor': 'CodeEditor',
+    '@uiw/react-textarea-code-editor': 'CodeEditor',
 
-  '@oxenode/core': 'OxenodeCore',
-  '@oxenode/ui': 'OxenodeUi',
+    '@oxenode/core': 'OxenodeCore',
+    '@oxenode/ui': 'OxenodeUi',
 
-  'react': 'React',
-  'react-dom': 'ReactDOM',
-  'react/jsx-runtime': 'jsxRuntimeExports'
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react/jsx-runtime': 'jsxRuntimeExports'
  },
+ plugins: [
+  new CheckExportWebpackPlugin('Name'),
+  new CheckExportWebpackPlugin('Content'),
+  new CheckDefaultExportWebpackPlugin('Content'),
+  new CheckExportWebpackPlugin('ports')
+ ],
  externalsType: 'window',
   module: {
     rules: [

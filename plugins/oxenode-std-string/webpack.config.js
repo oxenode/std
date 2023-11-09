@@ -3,10 +3,15 @@ const glob = require('glob');
 const terser = require('terser-webpack-plugin');
 const fs = require('node:fs');
 const pkg = require('./package.json');
-const pluginConfig = require('./plugin.json');
+const pluginConfig = JSON.parse(fs.readFileSync('./.oxerc', 'utf-8'));
 
 // Find all the source files
 const files = glob.sync('./src/**/*.{ts,tsx}');
+
+const {
+  CheckExportWebpackPlugin,
+  CheckDefaultExportWebpackPlugin
+} = require('@oxenode/cli/lib/plugins/checkExports');
 
 // Generate an entries object
 const entries = files.reduce((entries, entry) => {
@@ -23,6 +28,7 @@ Object.entries(entries).forEach((entry) => {
 });
 process.stdout.write('\n');
 
+
 function pluginMeta(files) {
   const index = {
     name: pkg.name || pluginConfig.name || `oxenode-plugin-untitled`,
@@ -32,12 +38,23 @@ function pluginMeta(files) {
     icon: pluginConfig.icon || 'FiBox'
   };
 
+  if (!fs.existsSync('./dist')) fs.mkdirSync('./dist');
   fs.writeFileSync(path.join('dist', 'index.json'), JSON.stringify(index, null, 4), 'utf-8');
 }
+
 pluginMeta(files);
 
 module.exports = {
   mode: 'production',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    liveReload: false,
+    hot: false,
+    compress: true,
+    port: 5500,
+  },
   entry: entries,
   experiments: {
     outputModule: true
@@ -64,17 +81,23 @@ module.exports = {
             }
         })
     ]
-},
+  },
   externals: {
-  '@uiw/react-textarea-code-editor': 'CodeEditor',
+    '@uiw/react-textarea-code-editor': 'CodeEditor',
 
-  '@oxenode/core': 'OxenodeCore',
-  '@oxenode/ui': 'OxenodeUi',
+    '@oxenode/core': 'OxenodeCore',
+    '@oxenode/ui': 'OxenodeUi',
 
-  'react': 'React',
-  'react-dom': 'ReactDOM',
-  'react/jsx-runtime': 'jsxRuntimeExports'
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react/jsx-runtime': 'jsxRuntimeExports'
  },
+ plugins: [
+  new CheckExportWebpackPlugin('Name'),
+  new CheckExportWebpackPlugin('Content'),
+  new CheckDefaultExportWebpackPlugin('Content'),
+  new CheckExportWebpackPlugin('ports')
+ ],
  externalsType: 'window',
   module: {
     rules: [

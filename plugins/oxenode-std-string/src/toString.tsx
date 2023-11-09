@@ -2,7 +2,7 @@ import { FetchProps, port } from "@oxenode/core";
 
 export const Name = "toString";
 
-export function Content() {
+export default function Content() {
   return <h3>toString</h3>;
 }
 

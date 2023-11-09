@@ -1,10 +1,11 @@
 {
     "name": "oxenode-std-string",
     "version": "0.0.1",
-    "date": "2023-11-05",
+    "date": "2023-11-09",
     "blueprints": [
         "toString",
         "string",
+        "node",
         "compare"
     ],
     "icon": "FiType"
