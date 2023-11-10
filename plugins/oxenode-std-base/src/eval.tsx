@@ -34,14 +34,12 @@ export async function Trigger({
 
   if (ret instanceof Promise) {
     return new Promise((r: any) => {
-
-      const resolve = (value: any) => {
+      ret.then((value: any) => {
         controller.setCache("return", value);
-        r();
         controller.trigger(0);
-      }
       
-      ret.then((x: any) => resolve(x));
+        r();
+      });
   
     });
   } else { 
@@ -58,5 +56,5 @@ export const ports = [
     .output()
     .type("data")
     .label("return")
-    .onFetch(({ cache }: FetchProps) => cache.return),
+    .onFetch(({ cache }: FetchProps) => cache),
 ];
