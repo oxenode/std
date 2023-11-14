@@ -1,4 +1,4 @@
-import { FetchProps, port } from "@oxenode/core";
+import { onFetchProps, port } from "@oxenode/core";
 
 export const Name = "toNumber";
 
@@ -11,5 +11,5 @@ export const ports = [
   port
     .output()
     .type("number")
-    .onFetch(({ inputs }: FetchProps) => Number(inputs[0])),
+    .onFetch(({ inputs }: onFetchProps) => Number(inputs[0])),
 ];

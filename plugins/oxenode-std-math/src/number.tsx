@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { NumberInput } from "@oxenode/ui";
 
 export const Name = "number constant";
@@ -16,5 +16,5 @@ export const ports = [
   port
     .output()
     .type("number")
-    .onFetch(({ state }: FetchProps) => Number(state.value)),
+    .onFetch(({ state }: onFetchProps) => Number(state.value)),
 ];

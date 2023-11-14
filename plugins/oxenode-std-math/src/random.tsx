@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { NumberInput } from "@oxenode/ui";
 
 export const Name = "random number";
@@ -42,7 +42,7 @@ export const ports = [
     .type("number")
 
     // TODO: CACHE SHOULD BE UNDEFINED IF NOT SET. IT SHOULD NOT BE ({})
-    .onFetch(({ cache, setCache, state }: FetchProps) => {
+    .onFetch(({ cache, setCache, state }: onFetchProps) => {
       // If initial state
       if (typeof cache === "object") {
         const rand =

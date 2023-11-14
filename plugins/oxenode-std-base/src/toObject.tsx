@@ -1,4 +1,4 @@
-import { FetchProps, port } from "@oxenode/core";
+import { onFetchProps, port } from "@oxenode/core";
 
 export const Name = "toObject";
 
@@ -11,7 +11,7 @@ export const ports = [
   port
     .output()
     .type("data")
-    .onFetch(({ inputs }: FetchProps) => {
+    .onFetch(({ inputs }: onFetchProps) => {
       try {
         return JSON.parse(inputs[0]);
       } catch (e) {

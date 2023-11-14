@@ -1,4 +1,4 @@
-import { FetchProps, port } from "@oxenode/core";
+import { onFetchProps, port } from "@oxenode/core";
 
 export const Name = "URL Queries";
 
@@ -12,7 +12,7 @@ export const ports = [
   port
     .output()
     .type("string")
-    .onFetch(({ inputs }: FetchProps) => {
+    .onFetch(({ inputs }: onFetchProps) => {
 
       if (typeof inputs.queries === "string") {
         return inputs.url + "?" + inputs.queries;

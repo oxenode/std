@@ -1,6 +1,6 @@
 import { Select } from "@oxenode/ui";
 
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 
 export const Name = "boolean constant";
 
@@ -17,5 +17,5 @@ export const ports = [
   port
     .output()
     .type("boolean")
-    .onFetch(({ state: { A } }: FetchProps) => Boolean(+A)),
+    .onFetch(({ state: { A } }: onFetchProps) => Boolean(+A)),
 ];

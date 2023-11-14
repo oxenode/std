@@ -1,4 +1,4 @@
-import { FetchProps, port } from "@oxenode/core";
+import { onFetchProps, port } from "@oxenode/core";
 
 export const Name = "subtract number";
 
@@ -12,5 +12,5 @@ export const ports = [
   port
     .output()
     .type("number")
-    .onFetch(({ inputs: { A, B } }: FetchProps) => A - B),
+    .onFetch(({ inputs: { A, B } }: onFetchProps) => A - B),
 ];

@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from '@oxenode/core'
+import { ContentProps, onFetchProps, port } from '@oxenode/core'
 import { TextInput } from '@oxenode/ui'
 
 export const Name = "get"
@@ -35,5 +35,5 @@ export const ports = [
   port
     .output()
     .type(["string", "number", "data"])
-    .onFetch(({ state, inputs }: FetchProps) => inputs[0][state.value]),
+    .onFetch(({ state, inputs }: onFetchProps) => inputs[0][state.value]),
 ];

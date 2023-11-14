@@ -1,4 +1,4 @@
-import { FetchProps, port } from "@oxenode/core";
+import { onFetchProps, port } from "@oxenode/core";
 
 export const Name = "NOT";
 
@@ -11,5 +11,5 @@ export const ports = [
   port
     .output()
     .type("boolean")
-    .onFetch(({ inputs: { A } }: FetchProps) => !Boolean(A)),
+    .onFetch(({ inputs: { A } }: onFetchProps) => !Boolean(A)),
 ];

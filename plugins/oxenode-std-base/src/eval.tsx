@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, TriggerProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, TriggerProps, port } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
 export const Name = "eval js";
@@ -56,5 +56,5 @@ export const ports = [
     .output()
     .type("data")
     .label("return")
-    .onFetch(({ cache }: FetchProps) => cache),
+    .onFetch(({ cache }: onFetchProps) => cache),
 ];

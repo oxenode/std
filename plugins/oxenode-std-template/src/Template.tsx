@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
 import { compile } from "handlebars";
@@ -24,7 +24,7 @@ export const ports = [
   port
     .output()
     .type("string")
-    .onFetch(({ state, inputs }: FetchProps) => {
+    .onFetch(({ state, inputs }: onFetchProps) => {
       let data: { [key: string]: any } = inputs;
       if (typeof inputs[0] === "object") {
         data = inputs[0];

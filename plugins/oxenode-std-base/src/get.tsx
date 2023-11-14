@@ -3,7 +3,7 @@ import React from "react";
 import {
   ContentProps,
   EdgeContext,
-  FetchProps,
+  onFetchProps,
   JStoOxenodeType,
   NodeContext,
   port,
@@ -28,7 +28,6 @@ export default function Content({ store, controller, node, state }: ContentProps
     if (port.type !== newType) {
       port.edgeIds.forEach((edgeId: string) => {
         const edge = edgeState[edgeId];
-        console.log(edge)
         if (edge) {
           // Disconnect where the edge comes from
           disconnectEdge(nodeState, edge, "from");
@@ -78,7 +77,7 @@ export const ports = [
   port
     .output()
     .type([])
-    .onFetch(({ store, state: { variableName } }: FetchProps) =>
+    .onFetch(({ store, state: { variableName } }: onFetchProps) =>
       variableName ? store[variableName] : Object.values(store)[0]
     ),
 ];

@@ -10,7 +10,8 @@
         "@oxenode/core": "^1.0.0",
         "@oxenode/ui": "^1.0.0",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "undefined": "^0.1.0"
     },
     "resolutions": {
         "@oxenode/core": "^1.0.0"
@@ -22,7 +23,7 @@
         "@babel/preset-env": "^7.23.2",
         "@babel/preset-react": "^7.22.15",
         "@babel/preset-typescript": "^7.23.2",
-        "@oxenode/cli": "0.0.8",
+        "@oxenode/cli": "^0.0.9",
         "babel-loader": "^9.1.3",
         "css-loader": "^6.8.1",
         "esbuild-loader": "^4.0.2",
@@ -44,4 +45,4 @@
         "react-dom": "^18.2.0",
         "react-jsx-runtime": "^1.0.0-alpha.1"
     }
-  }
+}

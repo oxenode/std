@@ -1,4 +1,4 @@
-import { FetchProps, port } from "@oxenode/core";
+import { onFetchProps, port } from "@oxenode/core";
 
 export const Name = "greater number";
 
@@ -12,5 +12,5 @@ export const ports = [
   port
     .output()
     .type("boolean")
-    .onFetch(({ inputs: { A, B } }: FetchProps) => Boolean(A > B)),
+    .onFetch(({ inputs: { A, B } }: onFetchProps) => Boolean(A > B)),
 ];

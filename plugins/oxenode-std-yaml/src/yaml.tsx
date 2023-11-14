@@ -1,6 +1,6 @@
 import * as yaml from "js-yaml";
 
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
 export const Name = "YAML";
@@ -23,7 +23,7 @@ export const ports = [
   port
     .output()
     .type("data")
-    .onFetch(({ state }: FetchProps) => {
+    .onFetch(({ state }: onFetchProps) => {
       try {
         return yaml.load(state.data) || {};
       } catch (e) {

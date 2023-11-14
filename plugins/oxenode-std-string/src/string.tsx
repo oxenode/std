@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
 export const Name = "String";
@@ -16,5 +16,5 @@ export const ports = [
   port
     .output()
     .type("string")
-    .onFetch(({ state }: FetchProps) => state.text),
+    .onFetch(({ state }: onFetchProps) => state.text),
 ];

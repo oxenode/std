@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from '@oxenode/core'
+import { ContentProps, onFetchProps, port } from '@oxenode/core'
 import { Textarea } from "@oxenode/ui";
 
 export const Name = "JSON";
@@ -21,7 +21,7 @@ export const ports = [
   port
     .output()
     .type("data")
-    .onFetch(({ state }: FetchProps) => {
+    .onFetch(({ state }: onFetchProps) => {
       try {
         return JSON.parse(state.data || "{}");
       } catch (e) {

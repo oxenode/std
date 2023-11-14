@@ -1,4 +1,4 @@
-import { ContentProps, FetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { NumberInput } from "@oxenode/ui";
 
 export const Name = "power";
@@ -22,5 +22,5 @@ export const ports = [
   port
     .output()
     .type("number")
-    .onFetch(({ inputs, state: { power } }: FetchProps) => Math.pow(inputs[0], power)),
+    .onFetch(({ inputs, state: { power } }: onFetchProps) => Math.pow(inputs[0], power)),
 ];
