@@ -59,5 +59,6 @@ export async function Trigger({ controller }: TriggerProps) {
 }
 
 export const ports = [
-    port.output().type('trigger')
+    port.output().type('trigger'),
+    port.output().type('data').label('event').onFetch(({ cache }) => cache)
 ];
