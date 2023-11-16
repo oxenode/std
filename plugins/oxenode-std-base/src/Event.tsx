@@ -1,23 +1,12 @@
 import { ContentProps, EventStoreContext, TriggerProps, port } from '@oxenode/core'
 import { Select } from '@oxenode/ui';
-import { useContext, useEffect } from 'react';
-
+import { useContext } from 'react';
 
 export const Name = "Event";
 
 export default function Content({ node, state }: ContentProps) {
     
     const { eventStore } = useContext(EventStoreContext);
-
-    const handleOnChange = (e: any) => {
-        console.log(e)
-    };
-  
-    useEffect(() => {
-      handleOnChange({
-        target: { value: state.eventName || Object.keys(eventStore)[0] },
-      });
-    }, []);
 
     return (
         <>
@@ -39,7 +28,7 @@ export default function Content({ node, state }: ContentProps) {
                 ></span><h3 style={{margin: 0}}>Event</h3>
             </div>
             <Select
-                onChange={handleOnChange}
+                onChange={(e) => console.log(e)}
                 name="eventName"
                 value={state.eventName || Object.keys(eventStore)[0]}
                 nodeId={node.id}
