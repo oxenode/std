@@ -1,10 +1,9 @@
 {
     "name": "oxenode-std-base",
     "version": "0.0.1",
-    "date": "2023-11-15",
+    "date": "2023-11-17",
     "blueprints": [
         "toObject",
-        "test",
         "set",
         "json",
         "if",
@@ -12,8 +11,7 @@
         "eval",
         "delay",
         "Print",
-        "Event",
-        "Begin"
+        "Event"
     ],
     "icon": "FiPackage"
 }
