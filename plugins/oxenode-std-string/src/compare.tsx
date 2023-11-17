@@ -3,7 +3,7 @@ import { onFetchProps, port } from "@oxenode/core";
 export const Name = "compare";
 
 export default function Content() {
-  return <h2>==</h2>;
+  return <h3>==</h3>;
 }
 
 export const ports = [
