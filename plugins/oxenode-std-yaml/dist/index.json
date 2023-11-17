@@ -1,7 +1,7 @@
 {
     "name": "oxenode-std-yaml",
     "version": "0.0.1",
-    "date": "2023-11-15",
+    "date": "2023-11-17",
     "blueprints": [
         "yaml"
     ],
