@@ -11,5 +11,5 @@ export const ports = [
   port
     .output()
     .type("boolean")
-    .onFetch(({ inputs: { A } }: onFetchProps) => !Boolean(A)),
+    .onFetch(({ inputs }: onFetchProps) => !Boolean(inputs[0])),
 ];
