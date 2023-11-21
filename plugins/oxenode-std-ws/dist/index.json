@@ -1,0 +1,10 @@
+{
+    "name": "oxenode-std-ws",
+    "version": "0.0.1",
+    "date": "2023-11-21",
+    "blueprints": [
+        "websocket-send",
+        "websocket-create"
+    ],
+    "icon": "FiShuffle"
+}
