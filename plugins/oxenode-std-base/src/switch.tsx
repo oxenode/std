@@ -39,11 +39,7 @@ export async function Trigger({ node, inputs: { value }, controller }: TriggerPr
 }
 
 export const ports = [
-    
     port.input().type('trigger'),
-    
-    port.input().type(['data']).label('test2').range(0, 16),
     port.input().type(['number', 'string']).label('value'),
-    port.output().type('trigger').label('case').range(0, 16),
-
+    port.output().type('trigger').label('case').range(0, 16)
 ]
