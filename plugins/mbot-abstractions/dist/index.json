@@ -1,0 +1,12 @@
+{
+    "name": "mbot-abstractions",
+    "version": "0.0.1",
+    "date": "2023-11-21",
+    "blueprints": [
+        "writePin",
+        "pinMode",
+        "motor",
+        "led"
+    ],
+    "icon": "FiShuffle"
+}
