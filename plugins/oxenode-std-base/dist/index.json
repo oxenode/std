@@ -1,11 +1,13 @@
 {
     "name": "oxenode-std-base",
     "version": "0.0.1",
-    "date": "2023-11-23",
+    "date": "2023-11-25",
     "blueprints": [
         "toObject",
         "switch",
         "set",
+        "property",
+        "object",
         "json",
         "if",
         "get",

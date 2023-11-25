@@ -1,11 +1,11 @@
 import { ContentProps, onFetchProps, port } from '@oxenode/core'
-import { TextInput } from '@oxenode/ui'
+import { Textarea } from '@oxenode/ui'
 
-export const Name = "get"
+export const Name = "get object property"
 
 const spanStyle = {
-    fontSize: '44px',
-    padding: '0 0.7rem'
+    fontSize: '28px',
+    padding: '0 0.4rem'
 }
 
 export default function Content({ nodeId }: ContentProps) {
@@ -17,11 +17,12 @@ export default function Content({ nodeId }: ContentProps) {
         margin: 0
     }}>
         <span style={spanStyle}>&#123;&#123;</span>
-        <TextInput
+        <Textarea
             style={{
-                fontSize: '32px',
-                maxWidth: '14rem',
-                margin: 0
+                maxWidth: '13rem',
+                fontSize: '18px',
+                margin: 0,
+                padding: '0.1rem'
             }}
             nodeId={nodeId}
             name='value'

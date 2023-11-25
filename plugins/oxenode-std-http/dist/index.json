@@ -1,7 +1,7 @@
 {
     "name": "oxenode-std-http",
     "version": "0.0.1",
-    "date": "2023-11-17",
+    "date": "2023-11-25",
     "blueprints": [
         "url",
         "fetch"
