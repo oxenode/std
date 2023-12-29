@@ -1,7 +1,7 @@
 {
     "name": "oxenode-std-base",
     "version": "0.0.1",
-    "date": "2023-11-25",
+    "date": "2023-12-28",
     "blueprints": [
         "toObject",
         "switch",
@@ -13,6 +13,7 @@
         "get",
         "eval",
         "delay",
+        "Signal",
         "Print",
         "Event"
     ],
