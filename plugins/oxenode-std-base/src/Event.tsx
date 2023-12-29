@@ -28,7 +28,7 @@ export default function Content({ node, state }: ContentProps) {
                 ></span><h3 style={{margin: 0}}>Event</h3>
             </div>
             <Select
-                onChange={(e) => console.log(e)}
+                onChange={(e) => {}}
                 name="eventName"
                 value={state.eventName || Object.keys(eventStore)[0]}
                 nodeId={node.id}
