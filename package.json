@@ -4,6 +4,9 @@
   "description": "This is a static node plugin for oxenode",
   "main": "index.js",
   "scripts": {
+    "build": "node mono.js run build",
+    "install": "node mono.js install",
+    "update": "node mono.js update",
     "mono": "node mono.js"
   },
   "author": "Matias Vazquez-Levi",
