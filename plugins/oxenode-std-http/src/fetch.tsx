@@ -31,7 +31,7 @@ export default function Content({ node }: ContentProps) {
       </Select>      
       <br/>
 
-      <ErrorMessage name="errr" nodeId={node.id}/>
+      <ErrorMessage name="err" nodeId={node.id}/>
     </>
   );
 }
@@ -50,23 +50,41 @@ export async function Trigger({
   }
 
   // Remove previous error
-  if (node.State.err) delete node.State.err;
+  if (node.State.err) {
+    delete node.State.err;
+  }
+
+  // Reset cache 
+  controller.setCache("return", {});
+  const port = node.ports.find(p => p.label === 'return');
+  if (!port) return;
+  port.Cache = {};
+
   controller.update(node);
   
-  fetch(url, options)
-    .then((res: any) => (res as Record<string, () => {}>)[parseMode]())
-    .then((value: Record<string, any>) => {
-      controller.setCache("return", value);
+  try {
+    // Fetch
+    const res = await fetch(url, options) as unknown;
 
-      controller.update(node);
-      controller.trigger(0);
-    })
-    .catch(error => {
-      node.State.err = `${error}`;
+    // Parse response according to parse mode
+    const value = await ((res as Record<string, () => {}>)[parseMode]());
+    
+    controller.setCache("return", value);
+    port.Cache = value;
+    controller.update(node);
 
-      controller.update(node);
-      controller.trigger(0);
-    })
+    
+  } catch(error) {
+    node.State.err = `${error}`;
+
+    controller.setCache("return", {});
+    port.Cache = {};
+    controller.update(node);
+  }
+
+  await (new Promise(r => setTimeout(r)));
+
+  return controller.trigger(0)
 }
 
 export const ports = [
