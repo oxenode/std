@@ -1,7 +1,7 @@
 {
     "name": "oxenode-std-math",
     "version": "0.0.1",
-    "date": "2024-01-02",
+    "date": "2024-02-07",
     "blueprints": [
         "toNumber",
         "tan",
