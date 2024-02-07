@@ -1,6 +1,8 @@
 import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
+export const Static = true;
+
 export const Name = "String";
 
 export default function Content({ nodeId }: ContentProps) {

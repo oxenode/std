@@ -1,0 +1,14 @@
+{
+    "name": "oxenode-asm",
+    "version": "0.0.1",
+    "date": "2024-02-07",
+    "blueprints": [
+        "puts",
+        "if",
+        "entrypoint",
+        "dump",
+        "Add",
+        "ASM"
+    ],
+    "icon": "FiPackage"
+}

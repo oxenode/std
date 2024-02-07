@@ -1,6 +1,8 @@
 import { ContentProps, onFetchProps, port } from "@oxenode/core";
 import { NumberInput } from "@oxenode/ui";
 
+export const Static = true;
+
 export const Name = "number constant";
 
 export default function Content({ nodeId }: ContentProps) {
