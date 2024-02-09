@@ -13,6 +13,7 @@ export default function Content({ nodeId }: ContentProps) {
       <Textarea
         value={text}
         onChange={e => setText(e.target.value)}
+        language="handlebars"
       />
     </>
   );
