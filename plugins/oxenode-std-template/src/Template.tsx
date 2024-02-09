@@ -6,14 +6,14 @@ import { compile } from "handlebars";
 export const Name = "Template";
 
 export default function Content({ nodeId }: ContentProps) {
-  const [source, setSource] = useNodeState(nodeId, 'source', "Hello {{name}} {{lastname}}");
+  const [text, setText] = useNodeState(nodeId, 'text', "Hello {{name}} {{lastname}}");
 
   return (
     <>
       <h2>Template</h2>
       <Textarea
-        value={source}
-        onChange={e => setSource(e.target.value)}
+        value={text}
+        onChange={e => setText(e.target.value)}
         language="handlebars"
       />
     </>
