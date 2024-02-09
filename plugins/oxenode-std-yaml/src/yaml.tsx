@@ -28,9 +28,9 @@ export const ports = [
 	port
 		.output()
 		.type("data")
-		.onFetch(({ state }: onFetchProps) => {
+		.onFetch(({ state: { source } }: onFetchProps) => {
 			try {
-				return yaml.load(state.data) || {};
+				return yaml.load(source) || {};
 			} catch (e) {
 				return { error: "parsing" };
 			}
