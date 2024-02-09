@@ -22,5 +22,5 @@ export const ports = [
 	port
 		.output()
 		.type("boolean")
-		.onFetch(({ state: { A } }: onFetchProps) => Boolean(+A)),
+		.onFetch(({ state: { value } }: onFetchProps) => Boolean(+value)),
 ];
