@@ -1,4 +1,4 @@
-import { ContentProps, onFetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port, useNodeState } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
 import { compile } from "handlebars";
@@ -6,13 +6,14 @@ import { compile } from "handlebars";
 export const Name = "Template";
 
 export default function Content({ nodeId }: ContentProps) {
+  const [source, setSource] = useNodeState(nodeId, 'source', "Hello {{name}} {{lastname}}");
+
   return (
     <>
       <h2>Template</h2>
       <Textarea
-        name="text"
-        nodeId={nodeId}
-        value="Hello {{name}} {{lastname}}"
+        value={source}
+        onChange={e => setSource(e.target.value)}
         language="handlebars"
       />
     </>

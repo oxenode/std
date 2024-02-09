@@ -1,60 +1,78 @@
-import { ContentProps, onFetchProps, TriggerProps, port } from "@oxenode/core";
-import { Textarea } from "@oxenode/ui";
+import {
+	ContentProps,
+	onFetchProps,
+	TriggerProps,
+	port,
+	useNodeState,
+} from "@oxenode/core";
+import { ErrorMessage, Textarea } from "@oxenode/ui";
 
 export const Name = "eval js";
 
 export default function Content({ nodeId }: ContentProps) {
-  return (
-    <>
-      <h2>JS</h2>
-      <Textarea
-        name="code"
-        nodeId={nodeId}
-        language="javascript"
-        value={"alert(`Hello world`)"}
-      />
-    </>
-  );
+	const [code, setCode] = useNodeState(
+		nodeId,
+		"code",
+		"alert(`Hello world`)"
+	);
+
+	return (
+		<>
+			<h2>JS</h2>
+			<Textarea
+				value={code}
+				onChange={(e) => setCode(e.target.value)}
+				language="javascript"
+			/>
+			<ErrorMessage nodeId={nodeId}/>
+		</>
+	);
 }
 
 const AsyncFunction: FunctionConstructor = Object.getPrototypeOf(
-  async function () {}
+	async function () {}
 ).constructor;
 
 export async function Trigger({
-   state: { code },
-   inputs: { args }, 
-   controller 
+	node,
+	state: { code },
+	inputs: { args },
+	controller,
 }: TriggerProps) {
-  args = args || {};
+	args = args || {};
 
-  const functionScript = AsyncFunction(...Object.keys(args), code);
+	const functionScript = AsyncFunction(...Object.keys(args), code);
 
-  const ret = functionScript(...Object.values(args));
+	let ret: any;
+	try {
+		ret = functionScript(...Object.values(args));
+	} catch (e) {
+		node.State.err = e;
+		controller.update(node);
+	}
 
-  if (ret instanceof Promise) {
-    return new Promise((r: any) => {
-      ret.then((value: any) => {
-        controller.setCache("return", value);
-        controller.trigger(0);
-      
-        r();
-      });
-  
-    });
-  } else { 
-    controller.setCache("return", ret);
-    return controller.trigger(0);
-  }
+	if (ret instanceof Promise) {
+		return new Promise((r: any) => {
+			ret.then((value: any) => {
+				controller.setCache("return", value);
+				controller.trigger(0);
+
+				r();
+			});
+		});
+	} else {
+		controller.setCache("return", ret);
+		return controller.trigger(0);
+	}
 }
 
 export const ports = [
-  port.input().type("trigger"),
-  port.input().type("data").label("args"),
-  port.output().type("trigger"),
-  port
-    .output()
-    .type("data")
-    .label("return")
-    .onFetch(({ cache }: onFetchProps) => cache),
+	port.input().type("trigger"),
+	port.input().type("data").label("args"),
+	port.output().type("trigger"),
+	port
+		.output()
+		.type("data")
+		.label("return")
+		.onFetch(({ cache }: onFetchProps) => cache),
 ];

@@ -1,9 +1,12 @@
-import { ContentProps, onFetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port, useNodeState } from "@oxenode/core";
 import { NumberInput } from "@oxenode/ui";
 
 export const Name = "random number";
 
 export default function Content({ nodeId }: ContentProps) {
+  const [min, setMin] = useNodeState(nodeId, 'min', 0);
+  const [max, setMax] = useNodeState(nodeId, 'max', 9);
+
   return (
     <>
       <h3>Random</h3>
@@ -14,18 +17,16 @@ export default function Content({ nodeId }: ContentProps) {
         }}
       >
         <NumberInput
-          name="min"
-          nodeId={nodeId}
-          value="1"
+          value={min}
+          onChange={e => setMin(e.target.value)}
           style={{
             maxWidth: "16em",
             width: "3em",
           }}
         />
         <NumberInput
-          name="max"
-          nodeId={nodeId}
-          value="9"
+          value={max}
+          onChange={e => setMax(e.target.value)}
           style={{
             maxWidth: "16em",
             width: "3em",

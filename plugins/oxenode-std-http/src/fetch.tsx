@@ -1,4 +1,4 @@
-import { ContentProps, onFetchProps, TriggerProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, TriggerProps, port, useNodeState } from "@oxenode/core";
 import { Select, ErrorMessage } from "@oxenode/ui";
 
 const methodWithBodies = [
@@ -9,11 +9,14 @@ const methodWithBodies = [
 
 export const Name = "Fetch";
 
-export default function Content({ node }: ContentProps) {
+export default function Content({ nodeId }: ContentProps) {
+  const [method, setMethod] = useNodeState(nodeId, 'method', 'GET');
+  const [mode, setMode] = useNodeState(nodeId, 'mode', 'json');
+
   return (
     <>
       <h2>Fetch</h2>
-      <Select nodeId={node.id} name="method" value="GET">
+      <Select value={method} onChange={e => setMethod(e.target.value)}>
         <option value="GET">GET</option>
         <option value="POST">POST</option>
         <option value="PUT">PUT</option>
@@ -21,7 +24,7 @@ export default function Content({ node }: ContentProps) {
         <option value="DELETE">DELETE</option>
       </Select>
       <br/>
-      <Select nodeId={node.id} name="parseMode" value="json">
+      <Select value={mode} onChange={e => setMode(e.target.value)}>
         <option value="json">json</option>
         <option value="text">text</option>
         <option value="blob">blob</option>
@@ -31,7 +34,7 @@ export default function Content({ node }: ContentProps) {
       </Select>      
       <br/>
 
-      <ErrorMessage name="err" nodeId={node.id}/>
+      <ErrorMessage name="err" nodeId={nodeId}/>
     </>
   );
 }

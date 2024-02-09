@@ -1,103 +1,115 @@
 import React from "react";
 import {
-  ContentProps,
-  TriggerProps,
-  JStoOxenodeType,
-  port,
-  EdgeContext,
-  NodeContext,
-  disconnectEdge,
+	ContentProps,
+	TriggerProps,
+	JStoOxenodeType,
+	port,
+	EdgeContext,
+	NodeContext,
+	disconnectEdge,
+	useNodeState,
 } from "@oxenode/core";
 
 import { Select } from "@oxenode/ui";
 
 export const Name = "Variable Set";
 
-export default function Content({ store, state, node, controller }: ContentProps) {
-  const { edgeState, dispatchEdge } = React.useContext(EdgeContext);
-  const { nodeState } = React.useContext(NodeContext);
+export default function Content({
+	store,
+	state,
+	node,
+	controller,
+}: ContentProps) {
+	const { edgeState, dispatchEdge } = React.useContext(EdgeContext);
+	const { nodeState } = React.useContext(NodeContext);
 
-  const handleOnChange = (e: any) => {
-    node.ports = node.ports.map((port) => {
-      // Change all ports to the new type
-      if (port.label === "value") {
-        const newType = JStoOxenodeType[typeof store[e.target.value]];
-        if (!port.edgeIds) return port;
+	const [variableName, setVariableName] = useNodeState(
+		node.id,
+		"variableName",
+		Object.keys(store)[0]
+	);
 
-        // If types are different, disconnect all edges.
-        if (port.type !== newType) {
-          port.edgeIds.forEach((edgeId: string) => {
-            const edge = edgeState[edgeId];
-            if (edge) {
-              // Disconnect where the edge comes from
-              disconnectEdge(nodeState, edge, "from");
+	const handleOnChange = (e: any) => {
+		node.ports = node.ports.map((port) => {
+			// Change all ports to the new type
+			if (port.label === "value") {
+				const newType = JStoOxenodeType[typeof store[e.target.value]];
+				if (!port.edgeIds) return port;
 
-              // Disconnect where the edge is going
-              disconnectEdge(nodeState, edge, "to");
+				// If types are different, disconnect all edges.
+				if (port.type !== newType) {
+					port.edgeIds.forEach((edgeId: string) => {
+						const edge = edgeState[edgeId];
+						if (edge) {
+							// Disconnect where the edge comes from
+							disconnectEdge(nodeState, edge, "from");
 
-              // Remove edge
-              dispatchEdge({ type: "REMOVE_EDGE", payload: edgeId });
-            }
-          });
-        }
+							// Disconnect where the edge is going
+							disconnectEdge(nodeState, edge, "to");
 
-        port.type = newType;
-      }
-      return port;
-    });
+							// Remove edge
+							dispatchEdge({
+								type: "REMOVE_EDGE",
+								payload: edgeId,
+							});
+						}
+					});
+				}
 
-    controller.update(node);
-  };
+				port.type = newType;
+			}
+			return port;
+		});
 
-  React.useEffect(
-    () =>
-      handleOnChange({
-        target: { value: state.variableName || Object.keys(store)[0] },
-      }),
-    []
-  );
+		controller.update(node);
+	};
 
-  return (
-    <>
-      <h3>set</h3>
-      <Select
-        onChange={handleOnChange}
-        name="variableName"
-        value={state.variableName || Object.keys(store)[0]}
-        nodeId={node.id}
-      >
-        {Object.entries(store).map(([name], i) => (
-          <option key={i} value={name}>
-            {name}
-          </option>
-        ))}
-      </Select>
-    </>
-  );
+	React.useEffect(
+		() =>
+			handleOnChange({
+				target: { value: state.variableName || Object.keys(store)[0] },
+			}),
+		[]
+	);
+
+	return (
+		<>
+			<h3>set</h3>
+			<Select
+				value={variableName}
+				onChange={(e) => setVariableName(e.target.value)}
+			>
+				{Object.entries(store).map(([name], i) => (
+					<option key={i} value={name}>
+						{name}
+					</option>
+				))}
+			</Select>
+		</>
+	);
 }
 
 export async function Trigger({
-  controller,
-  store,
-  state: { variableName },
-  inputs: { value },
+	controller,
+	store,
+	state: { variableName },
+	inputs: { value },
 }: TriggerProps) {
-  if (value !== undefined) {
-    if (variableName !== 0) {
-      
-      // Hackish trick to trigger re-render of variable in side panel
-      store[variableName] = value;
-      
-      controller.setStoreItem({ name: variableName, value });
-    }
-  }
+	if (value !== undefined) {
+		if (variableName !== 0) {
+			// Hackish trick to trigger re-render of variable in side panel
+			store[variableName] = value;
 
-  return controller.trigger(0);
+			controller.setStoreItem({ name: variableName, value });
+		}
+	}
+
+	return controller.trigger(0);
 }
 
 export const ports = [
-  port.input().type("trigger"),
-  port.input().type([]).label("value"),
+	port.input().type("trigger"),
+	port.input().type([]).label("value"),
 
-  port.output().type("trigger")
+	port.output().type("trigger"),
 ];

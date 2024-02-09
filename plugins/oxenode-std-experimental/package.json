@@ -7,14 +7,13 @@
         "watch": "nodemon --watch src -e ts,tsx,js,jsx --exec 'npm run dev'"
     },
     "dependencies": {
-        "@oxenode/core": "^1.0.1",
-        "@oxenode/ui": "^1.0.0",
+        "@oxenode/core": "^1.2.0",
+        "@oxenode/ui": "^1.1.4",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "undefined": "^0.1.0"
+        "react-dom": "^18.2.0"
     },
     "resolutions": {
-        "@oxenode/core": "^1.0.0"
+        "@oxenode/core": "^1.2.0"
     },
     "devDependencies": {
         "@babel/core": "^7.23.2",

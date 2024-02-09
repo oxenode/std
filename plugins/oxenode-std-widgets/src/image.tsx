@@ -1,13 +1,15 @@
-import { ContentProps, TriggerProps, port } from "@oxenode/core";
+import { ContentProps, TriggerProps, port, useNodeState } from "@oxenode/core";
 import { Image } from "@oxenode/ui";
 
 export const Name = "Image";
 
 export default function Content({ nodeId }: ContentProps) {
+  const [url] = useNodeState(nodeId, 'url', '');
+  
   return (
     <>
       <h2>Image</h2>
-      <Image nodeId={nodeId} name="url" width='200px' />
+      <Image src={url}/>
     </>
   );
 }

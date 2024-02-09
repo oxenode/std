@@ -1,8 +1,9 @@
-import { TriggerProps, port } from "@oxenode/core";
+import { ContentProps, TriggerProps, port } from "@oxenode/core";
+import { ErrorMessage } from "@oxenode/ui"
 
 export const Name = "Websocket Send";
 
-export default function Content() {
+export default function Content({ nodeId }: ContentProps) {
 
     return (
         <>
@@ -11,7 +12,7 @@ export default function Content() {
     );
 }
 
-export async function Trigger({ inputs: { socket, data }, controller }: TriggerProps) {
+export async function Trigger({ node, inputs: { socket, data }, controller }: TriggerProps) {
     if (data.length < 2) {
         console.log('Please provide a byte string\n Example:   81 A2 BE\n');
     };
@@ -22,7 +23,8 @@ export async function Trigger({ inputs: { socket, data }, controller }: TriggerP
 
     if (!args) args = [];
 
-    const promise = new Promise(r => {
+
+    const promise = new Promise((r, rej) => {
         socket.onmessage = (data: string) => {
             r(data);
         };

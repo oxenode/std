@@ -1,8 +1,9 @@
 {
     "name": "oxenode-asm",
     "version": "0.0.1",
-    "date": "2024-02-07",
+    "date": "2024-02-09",
     "blueprints": [
+        "test",
         "puts",
         "if",
         "entrypoint",

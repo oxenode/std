@@ -1,16 +1,20 @@
-import { ContentProps, onFetchProps, port } from '@oxenode/core'
+import { ContentProps, onFetchProps, port, useNodeState } from '@oxenode/core'
 import { Textarea } from "@oxenode/ui";
 
 export const Name = "JSON";
 
 export default function Content({ nodeId }: ContentProps) {
+  const [data, setData] = useNodeState(nodeId, 
+    'data', 
+    '{ \n  "name": "Jason", \n  "lastname": "Daniels" \n}'  
+  )
+
   return (
     <>
       <h2>JSON</h2>
       <Textarea
-        name="data"
-        nodeId={nodeId}
-        value={'{ \n  "name": "Jason", \n  "lastname": "Daniels" \n}'}
+        value={data}
+        onChange={e => setData(e.target.value)}
         language="json"
       />
     </>

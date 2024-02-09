@@ -1,4 +1,4 @@
-import { ContentProps, onFetchProps, port } from '@oxenode/core'
+import { ContentProps, onFetchProps, port, useNodeState } from '@oxenode/core'
 import { Textarea } from '@oxenode/ui'
 
 export const Name = "get object property"
@@ -9,6 +9,8 @@ const spanStyle = {
 }
 
 export default function Content({ nodeId }: ContentProps) {
+    const [value, setValue] = useNodeState(nodeId, 'value', '');
+
     return <div style={{
         display:'inline-flex',
         flexDirection: 'row',
@@ -18,14 +20,14 @@ export default function Content({ nodeId }: ContentProps) {
     }}>
         <span style={spanStyle}>&#123;&#123;</span>
         <Textarea
+            value={value}
+            onChange={e => setValue(e.target.value)}
             style={{
                 maxWidth: '13rem',
                 fontSize: '18px',
                 margin: 0,
                 padding: '0.1rem'
             }}
-            nodeId={nodeId}
-            name='value'
         />
         <span style={spanStyle}>&#125;&#125;</span>
     </div>

@@ -1,83 +1,92 @@
 import React from "react";
 
 import {
-  ContentProps,
-  EdgeContext,
-  onFetchProps,
-  JStoOxenodeType,
-  NodeContext,
-  port,
-  disconnectEdge,
+	ContentProps,
+	EdgeContext,
+	onFetchProps,
+	JStoOxenodeType,
+	NodeContext,
+	port,
+	disconnectEdge,
+	useNodeState,
 } from "@oxenode/core";
 
 import { Select } from "@oxenode/ui";
 
-
 export const Name = "Variable Get";
 
-export default function Content({ store, controller, node, state }: ContentProps) {
-  const { edgeState, dispatchEdge } = React.useContext(EdgeContext);
-  const { nodeState } = React.useContext(NodeContext);
+export default function Content({
+	store,
+	controller,
+	node,
+	state,
+}: ContentProps) {
+	const { edgeState, dispatchEdge } = React.useContext(EdgeContext);
+	const { nodeState } = React.useContext(NodeContext);
 
-  const handleOnChange = (e: any) => {
-    let port = node.ports[0];
-    const newType = JStoOxenodeType[typeof store[e.target.value]];
+	const [variableName, setVariableName] = useNodeState(
+		node.id,
+		"variableName",
+		Object.keys(store)[0]
+	);
 
-    if (!port.edgeIds) return;
+	const handleOnChange = (e: any) => {
+		let port = node.ports[0];
+		const newType = JStoOxenodeType[typeof store[e.target.value]];
 
-    if (port.type !== newType) {
-      port.edgeIds.forEach((edgeId: string) => {
-        const edge = edgeState[edgeId];
-        if (edge) {
-          // Disconnect where the edge comes from
-          disconnectEdge(nodeState, edge, "from");
+		if (!port.edgeIds) return;
 
-          // Disconnect where the edge is going
-          disconnectEdge(nodeState, edge, "to");
+		if (port.type !== newType) {
+			port.edgeIds.forEach((edgeId: string) => {
+				const edge = edgeState[edgeId];
+				if (edge) {
+					// Disconnect where the edge comes from
+					disconnectEdge(nodeState, edge, "from");
 
-          // Remove edge
-          dispatchEdge({ type: "REMOVE_EDGE", payload: edge.id });
-        }
-      });
-    }
+					// Disconnect where the edge is going
+					disconnectEdge(nodeState, edge, "to");
 
-    port.type = newType;
+					// Remove edge
+					dispatchEdge({ type: "REMOVE_EDGE", payload: edge.id });
+				}
+			});
+		}
 
-    node.ports[0] = port;
+		port.type = newType;
 
-    controller.update(node);
-  };
+		node.ports[0] = port;
 
-  React.useEffect(() => {
-    handleOnChange({
-      target: { value: state.variableName || Object.keys(store)[0] },
-    });
-  }, []);
+		controller.update(node);
+	};
 
-  return (
-    <>
-      <h3>get</h3>
-      <Select
-        onChange={handleOnChange}
-        name="variableName"
-        value={state.name || Object.keys(store)[0]}
-        nodeId={node.id}
-      >
-        {Object.entries(store).map(([name], i) => (
-          <option key={i} value={name}>
-            {name}
-          </option>
-        ))}
-      </Select>
-    </>
-  );
+	React.useEffect(() => {
+		handleOnChange({
+			target: { value: state.variableName || Object.keys(store)[0] },
+		});
+	}, []);
+
+	return (
+		<>
+			<h3>get</h3>
+			<Select
+				onChange={handleOnChange}
+				value={state.name || Object.keys(store)[0]}
+			>
+				{Object.entries(store).map(([name], i) => (
+					<option key={i} value={name}>
+						{name}
+					</option>
+				))}
+			</Select>
+		</>
+	);
 }
 
 export const ports = [
-  port
-    .output()
-    .type([])
-    .onFetch(({ store, state: { variableName } }: onFetchProps) =>
-      variableName ? store[variableName] : Object.values(store)[0]
-    ),
+	port
+		.output()
+		.type([])
+		.onFetch(({ store, state: { variableName } }: onFetchProps) =>
+			variableName ? store[variableName] : Object.values(store)[0]
+		),
 ];

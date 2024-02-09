@@ -1,16 +1,17 @@
-import { ContentProps, onFetchProps, port } from "@oxenode/core";
+import { ContentProps, onFetchProps, port, useNodeState } from "@oxenode/core";
 import { NumberInput } from "@oxenode/ui";
 
 export const Name = "power";
 
 export default function Content({ nodeId }: ContentProps) {
+  const [power, setPower] = useNodeState(nodeId, 'power', 2);
+
   return (
     <>
       <h4>pow</h4>
       <NumberInput
-        name="power"
-        nodeId={nodeId}
-        value="2"
+        value={power}
+        onChange={e => setPower(e.target.value)}
         style={{ fontSize: 16 }}
       />
     </>

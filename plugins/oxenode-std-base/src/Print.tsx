@@ -1,14 +1,19 @@
-import { ContentProps, port, TriggerProps } from "@oxenode/core";
+import { useNodeState, ContentProps, port, TriggerProps } from "@oxenode/core";
 
 import { Textarea } from "@oxenode/ui";
 
 export const Name = "Print";
 
 export default function Content({ nodeId }: ContentProps) {
+  const [text, setText] = useNodeState(nodeId, 'text', '');
+
   return (
     <>
       <h2>Print</h2>
-      <Textarea name="text" nodeId={nodeId} />
+      <Textarea
+        value={text}
+        onChange={e => setText(e.target.value)}
+      />
     </>
   );
 }
