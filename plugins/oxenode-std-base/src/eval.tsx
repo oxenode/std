@@ -24,6 +24,7 @@ export default function Content({ nodeId }: ContentProps) {
 				onChange={(e) => setCode(e.target.value)}
 				language="javascript"
 			/>
+			<br/>
 			<ErrorMessage nodeId={nodeId}/>
 		</>
 	);
@@ -41,26 +42,44 @@ export async function Trigger({
 }: TriggerProps) {
 	args = args || {};
 
-	const functionScript = AsyncFunction(...Object.keys(args), code);
+	let functionScript, ret: any;
+	try {
+		functionScript = AsyncFunction(...Object.keys(args), code);
+	} catch(e) {
+		node.State.err = e.toString();
+		controller.update(node);
+		return controller.trigger(0);
+	}
 
-	let ret: any;
 	try {
 		ret = functionScript(...Object.values(args));
 	} catch (e) {
-		node.State.err = e;
+		node.State.err = e.toString();
 		controller.update(node);
+		return controller.trigger(0);
 	}
 
 	if (ret instanceof Promise) {
 		return new Promise((r: any) => {
 			ret.then((value: any) => {
+				node.State.err = undefined;
+				controller.update(node);
 				controller.setCache("return", value);
 				controller.trigger(0);
 
+
 				r();
+			})
+			.catch((e: any) => {
+				node.State.err = e.toString();
+				controller.update(node);
+				controller.trigger(0);
 			});
 		});
 	} else {
+		node.State.err = undefined;
+		controller.update(node);
+
 		controller.setCache("return", ret);
 		return controller.trigger(0);
 	}
