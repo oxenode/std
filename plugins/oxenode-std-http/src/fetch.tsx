@@ -34,14 +34,14 @@ export default function Content({ nodeId }: ContentProps) {
       </Select>      
       <br/>
 
-      <ErrorMessage name="err" nodeId={nodeId}/>
+      <ErrorMessage nodeId={nodeId}/>
     </>
   );
 }
 
 export async function Trigger({ 
   node,
-  state: { method, parseMode },
+  state: { method, mode },
   inputs: { url, options, body },
   controller
 }: TriggerProps) {
@@ -70,7 +70,7 @@ export async function Trigger({
     const res = await fetch(url, options) as unknown;
 
     // Parse response according to parse mode
-    const value = await ((res as Record<string, () => {}>)[parseMode]());
+    const value = await ((res as Record<string, () => {}>)[mode]());
     
     controller.setCache("return", value);
     port.Cache = value;
