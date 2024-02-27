@@ -1,7 +1,7 @@
 {
     "name": "oxenode-std-base",
     "version": "0.0.1",
-    "date": "2024-02-09",
+    "date": "2024-02-27",
     "blueprints": [
         "switch",
         "set",
@@ -10,8 +10,11 @@
         "json",
         "if",
         "get",
+        "function",
         "eval",
         "delay",
+        "comment",
+        "call",
         "Signal",
         "Print",
         "Event"

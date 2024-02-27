@@ -5,13 +5,16 @@ export const Static = true;
 /**
  * Node's Name
  */
-export const Name = "puts";
+export const Name = "Print";
 
 /**
  * Node's React Component
  */
 export default function Content({}) {
-	return <h1>puts</h1>;
+	return <>
+		<h1>Print</h1>
+		<span>x86_64 write syscall</span>
+	</>;
 }
 
 /**

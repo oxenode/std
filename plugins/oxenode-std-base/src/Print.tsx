@@ -33,6 +33,6 @@ export async function Trigger({ node, controller, inputs }: TriggerProps) {
 
 export const ports = [
   port.input().type("trigger"),
-  port.input().type(["data", "string", "number", "boolean"]),
+  port.input().type(["data", "string", "number", "boolean", "function"]),
   port.output().type("trigger"),
 ];

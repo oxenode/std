@@ -11,7 +11,10 @@ export const Name = "Add";
  * Node's React Component
  */
 export default function Content({}) {
-	return <h1>Add</h1>;
+	return <>
+		<h2>Add</h2>
+		<span>Add two values from .data</span>
+	</>;
 }
 
 /**

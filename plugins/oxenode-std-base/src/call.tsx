@@ -2,60 +2,31 @@ import {
 	ContentProps,
 	onFetchProps,
 	TriggerProps,
-	port,
-	useNodeState,
+	port
 } from "@oxenode/core";
-import { ErrorMessage, Textarea } from "@oxenode/ui";
+import { ErrorMessage } from "@oxenode/ui";
 
-export const Name = "eval js";
+export const Name = "Function Call JS";
 
 export default function Content({ nodeId }: ContentProps) {
-	const [code, setCode] = useNodeState(
-		nodeId,
-		"code",
-		"alert(`Hello world`)"
-	);
-
 	return (
 		<>
-			<h2>eval</h2>
-			<Textarea
-				value={code}
-				onChange={(e) => setCode(e.target.value)}
-				language="javascript"
-			/>
-			<br/>
+			<h2>Function Call</h2>
+			<span>Arguments do not work</span>
 			<ErrorMessage nodeId={nodeId}/>
 		</>
 	);
 }
 
-const AsyncFunction: FunctionConstructor = Object.getPrototypeOf(
-	async function () {}
-).constructor;
-
 export async function Trigger({
 	node,
-	state: { code },
-	inputs: { args },
+	inputs,
 	controller,
 }: TriggerProps) {
-	args = args || {};
-
-	let functionScript, ret: any;
+	let args = inputs.args || {};
+	let ret: any;
 	try {
-		const argDeconstruct = `\nconst {${Object.keys(args).join(',')}} = args;\n`;
-		functionScript = AsyncFunction('args', argDeconstruct + code);
-	} catch(e) {
-		node.State.err = e.toString();
-		controller.update(node);
-		return controller.trigger(0);
-	}
-
-	controller.setCache("function", functionScript);
-
-	try {
-		ret = functionScript(...Object.values(args));
+		ret = inputs.function(args);
 	} catch (e) {
 		node.State.err = e.toString();
 		controller.update(node);
@@ -90,15 +61,11 @@ export async function Trigger({
 export const ports = [
 	port.input().type("trigger"),
 	port.input().type("data").label("args"),
+	port.input().type("function").label("function"),
 	port.output().type("trigger"),
 	port
 		.output()
 		.type("data")
 		.label("return")
-		.onFetch(({ cache }: onFetchProps) => cache),
-	port
-		.output()
-		.type("function")
-		.label("function")
-		.onFetch(({ cache }: onFetchProps) => cache),
+		.onFetch(({ cache }: onFetchProps) => cache)
 ];

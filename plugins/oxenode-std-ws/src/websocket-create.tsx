@@ -8,7 +8,7 @@ export default function Content({ nodeId }: ContentProps) {
     return (
         <>
             <h3>Websocket Create</h3>
-            <ErrorMessage name="err" nodeId={nodeId}/>
+            <ErrorMessage nodeId={nodeId}/>
         </>
     );
 }
@@ -20,8 +20,7 @@ export async function Trigger({ node, inputs: { uri }, controller }: TriggerProp
         server.onerror = (err) => {
             node.State.err = err;
             controller.update(node);
-            
-            reject(err)
+            reject(err);
         };
     }));
 

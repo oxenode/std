@@ -8,13 +8,16 @@ export default function Content({ nodeId }: ContentProps) {
     return (
         <>
             <h3>Websocket Send</h3>
+            <ErrorMessage nodeId={nodeId}/>
         </>
     );
 }
 
 export async function Trigger({ node, inputs: { socket, data }, controller }: TriggerProps) {
     if (data.length < 2) {
-        console.log('Please provide a byte string\n Example:   81 A2 BE\n');
+        node.State.err = 'Please provide a hex byte string\n Example:   81 A2 BE\n';
+        controller.update(node);
+        return;
     };
 
     let [command, ...args] = data.split(' ');
@@ -22,7 +25,6 @@ export async function Trigger({ node, inputs: { socket, data }, controller }: Tr
     command = parseInt(command.slice(0, 2), 16) || 0x00;
 
     if (!args) args = [];
-
 
     const promise = new Promise((r, rej) => {
         socket.onmessage = (data: string) => {
@@ -36,8 +38,12 @@ export async function Trigger({ node, inputs: { socket, data }, controller }: Tr
         args[1] & 0xFF || 0x00  // ARG2 Byte or just send 0x00 if not defined
     ]);
 
-    socket.send(commandBuffer);
-
+    if (socket.send) socket.send(commandBuffer);
+    else {
+        node.State.err = "Socket not defined";
+        controller.update(node);
+        return;
+    }
 
     controller.setCache('data', promise );
 

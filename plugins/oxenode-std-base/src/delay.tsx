@@ -4,13 +4,13 @@ import { NumberInput } from "@oxenode/ui";
 export const Name = "delay";
 
 export default function Content({ nodeId }: ContentProps) {
-  const [ delayMs, setDelayMs ] = useNodeState(nodeId, 'delayMs', 1000);
+  const [ delayMs, setDelayMs ] = useNodeState<number>(nodeId, 'delayMs', 1000);
   return (
     <>
       <h2>Delay (ms)</h2>
       <NumberInput 
         value={delayMs} 
-        onChange={e => setDelayMs(e.target.value)}
+        onChange={e => setDelayMs(+e.target.value)}
       />
     </>
   );

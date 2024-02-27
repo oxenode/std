@@ -6,8 +6,8 @@
 		"dev": "nodemon --watch src -e tsx,jsx --exec 'oxenode dev'"
 	},
 	"dependencies": {
-		"@oxenode/core": "^1.2.0",
-		"@oxenode/ui": "^1.1.4",
+		"@oxenode/core": "^1.2.2",
+		"@oxenode/ui": "^1.2.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},

@@ -1,4 +1,4 @@
-import { ContentProps, port } from "@oxenode/core";
+import { ContentProps, port, useNodeState } from "@oxenode/core";
 import { Textarea } from "@oxenode/ui";
 
 export const Static = true;
@@ -6,19 +6,21 @@ export const Static = true;
 /**
  * Node's Name
  */
-export const Name = "ASM";
+export const Name = "ASM Source";
 
 /**
  * Node's React Component
  */
 export default function Content({ nodeId }: ContentProps) {
+    const [source, setSource] = useNodeState(nodeId, 'source', '; asm source\n');
+
 	return <>
         <h1>asm</h1>
 
         <Textarea
-            nodeId={nodeId}
-            name='source'
             language="armasm"
+            value={source}
+            onChange={e => e.target.value}
         />
     
     </>;
