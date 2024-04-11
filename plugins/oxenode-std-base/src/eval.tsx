@@ -42,46 +42,59 @@ export async function Trigger({
 }: TriggerProps) {
 	args = args || {};
 
+	console.log('hit')
+
 	let functionScript, ret: any;
+	// Create the function
 	try {
-		const argDeconstruct = `\nconst {${Object.keys(args).join(',')}} = args;\n`;
+		// Desconstruct arguments from the 'arg' object
+		const argDeconstruct = `const {${Object.keys(args).join(',')}} = args;\n`;
 		functionScript = AsyncFunction('args', argDeconstruct + code);
 	} catch(e) {
 		node.State.err = e.toString();
+		console.log(functionScript);
 		controller.update(node);
 		return controller.trigger(0);
 	}
 
+	console.log(functionScript);
+	// Set the function in cache
 	controller.setCache("function", functionScript);
 
+	// Run the function
 	try {
-		ret = functionScript(...Object.values(args));
+		ret = functionScript(args || {});
 	} catch (e) {
 		node.State.err = e.toString();
 		controller.update(node);
 		return controller.trigger(0);
 	}
 
+	// Run if it is a promise, then trigger next node
 	if (ret instanceof Promise) {
 		return new Promise((r: any) => {
 			ret.then((value: any) => {
 				node.State.err = undefined;
+
+				// Trigger next node
 				controller.update(node);
 				controller.setCache("return", value);
 				controller.trigger(0);
-
 				r();
 			})
 			.catch((e: any) => {
 				node.State.err = e.toString();
+				
+				// Trigger next node
 				controller.update(node);
 				controller.trigger(0);
 			});
 		});
 	} else {
 		node.State.err = undefined;
-		controller.update(node);
 
+		// Trigger next node
+		controller.update(node);
 		controller.setCache("return", ret);
 		return controller.trigger(0);
 	}

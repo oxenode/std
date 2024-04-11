@@ -11,8 +11,7 @@ export const Name = "Function Call JS";
 export default function Content({ nodeId }: ContentProps) {
 	return (
 		<>
-			<h2>Function Call</h2>
-			<span>Arguments do not work</span>
+			<h3>JS Function Call</h3>
 			<ErrorMessage nodeId={nodeId}/>
 		</>
 	);
@@ -60,8 +59,8 @@ export async function Trigger({
 
 export const ports = [
 	port.input().type("trigger"),
-	port.input().type("data").label("args"),
 	port.input().type("function").label("function"),
+	port.input().type("data").label("args"),
 	port.output().type("trigger"),
 	port
 		.output()
