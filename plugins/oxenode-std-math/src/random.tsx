@@ -18,7 +18,7 @@ export default function Content({ nodeId }: ContentProps) {
       >
         <NumberInput
           value={min}
-          onChange={e => setMin(e.target.value)}
+          onChange={e => setMin(Number(e.target.value))}
           style={{
             maxWidth: "16em",
             width: "3em",
@@ -26,7 +26,7 @@ export default function Content({ nodeId }: ContentProps) {
         />
         <NumberInput
           value={max}
-          onChange={e => setMax(e.target.value)}
+          onChange={e => setMax(Number(e.target.value))}
           style={{
             maxWidth: "16em",
             width: "3em",
@@ -43,13 +43,13 @@ export const ports = [
     .type("number")
 
     // TODO: CACHE SHOULD BE UNDEFINED IF NOT SET. IT SHOULD NOT BE ({})
-    .onFetch(({ cache, setCache, state }: onFetchProps) => {
+    .onFetch(({ cache, controller, state }: onFetchProps) => {
       // If initial state
       if (typeof cache === "object") {
         const rand =
-          Math.random() * (Number(state.max) - Number(state.min)) +
-          Number(state.min);
-        setCache(rand);
+          Math.random() * (state.max - state.min) + state.min;
+        
+        controller.setCache(rand);
 
         return rand;
       } else {
