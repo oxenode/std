@@ -13,8 +13,7 @@ export default function Content({ nodeId }: ContentProps) {
     <>
       <h2>Plotter</h2>
       <div style={{
-        display: 'flex',
-        
+        display: 'flex'
       }}>
         <input
           type="number"

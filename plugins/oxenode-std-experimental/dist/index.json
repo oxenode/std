@@ -1,10 +1,10 @@
 {
     "name": "oxenode-std-experimental",
     "version": "0.0.1",
-    "date": "2024-04-12",
+    "date": "2024-04-13",
     "blueprints": [
         "canvas",
-        "Graph"
+        "Plotter"
     ],
     "icon": "FiInfo"
 }
