@@ -32,7 +32,7 @@ export const extern = {
 	'x86_64': ({ $, inputs: { a, b }, outputs: { result } }: ExternProps) => [
 		$("mov", "rax", [a]),
 		$("add", "rax", [b]),
-		result
+		(result !== 0)
 			? $("mov", [result], "rax") 				// Move to destination
 			: "; unused result, can be found in `rax`", // Write comment
 	],

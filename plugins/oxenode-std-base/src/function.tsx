@@ -43,7 +43,7 @@ export const ports = [
 
 				let functionScript;
 				try {
-					const argDeconstruct = `const {${Object.keys(args).join(
+					const argDeconstruct = `let {${Object.keys(args).join(
 						","
 					)}} = args;\n`;
 					functionScript = AsyncFunction(

@@ -48,7 +48,7 @@ export async function Trigger({
 	// Create the function
 	try {
 		// Desconstruct arguments from the 'arg' object
-		const argDeconstruct = `const {${Object.keys(args).join(',')}} = args;\n`;
+		const argDeconstruct = `let {${Object.keys(args).join(',')}} = args;\n`;
 		functionScript = AsyncFunction('args', argDeconstruct + code);
 	} catch(e) {
 		node.State.err = e.toString();
