@@ -41,8 +41,7 @@ export default function Content({ nodeId }: ContentProps) {
             return `${x} ${y}`
           }).join(' ') : '0 50 200 50'}
           stroke="var(--blue)" 
-          fill="transparent" 
-          stroke-width="1"
+          fill="transparent"
         />
       </svg>
       <button onClick={() => setValues([])}>Clear</button>
